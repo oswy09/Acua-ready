@@ -1,0 +1,5 @@
+{
+  "name": "EduChat PDF",
+  "description": "Una plataforma de estudio inteligente donde puedes subir tus PDFs y chatear con ellos usando IA para resolver dudas y resumir contenido.",
+  "requestFramePermissions": []
+}
