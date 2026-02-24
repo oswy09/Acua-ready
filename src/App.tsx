@@ -373,17 +373,17 @@ const buildOptionLabelsFallback = (options: string[], correctAnswer: number) =>
 const clonePdfBytes = (bytes: Uint8Array) => new Uint8Array(bytes);
 
 const getGeminiClient = () => {
-  const apiKey = process.env.GEMINI_API_KEY?.trim();
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY?.trim();
   if (!apiKey || apiKey === 'PEGA_AQUI_TU_GEMINI_API_KEY') {
-    throw new Error('Falta configurar GEMINI_API_KEY en .env.local con una clave real de Google AI Studio');
+    throw new Error('Falta configurar VITE_GEMINI_API_KEY en .env con una clave real de Google AI Studio');
   }
   return new GoogleGenAI({ apiKey });
 };
 
 const getGroqApiKey = () => {
-  const apiKey = process.env.GROQ_API_KEY?.trim();
+  const apiKey = import.meta.env.VITE_GROQ_API_KEY?.trim();
   if (!apiKey || apiKey === 'PEGA_AQUI_TU_GROQ_API_KEY') {
-    throw new Error('Falta configurar GROQ_API_KEY en .env.local con una clave real de Groq');
+    throw new Error('Falta configurar VITE_GROQ_API_KEY en .env con una clave real de Groq');
   }
   return apiKey;
 };
@@ -660,11 +660,11 @@ const formatGeminiError = (error: any) => {
   }
 
   if (rawMessage.includes('API_KEY_INVALID') || rawMessage.includes('API key not valid')) {
-    return 'Tu GEMINI_API_KEY es inválida. Genera una nueva en Google AI Studio y actualiza .env.local.';
+    return 'Tu VITE_GEMINI_API_KEY es inválida. Genera una nueva en Google AI Studio y actualiza .env.';
   }
 
   if (code === 401 || rawMessage.toLowerCase().includes('invalid api key') || rawMessage.toLowerCase().includes('authentication')) {
-    return 'La clave del proveedor seleccionado es inválida o falta configuración. Revisa GEMINI_API_KEY o GROQ_API_KEY en .env.local.';
+    return 'La clave del proveedor seleccionado es inválida o falta configuración. Revisa VITE_GEMINI_API_KEY o VITE_GROQ_API_KEY en .env.';
   }
 
   return message || rawMessage || 'Hubo un error al procesar tu solicitud.';
@@ -2169,7 +2169,7 @@ export default function App() {
                   ))}
                 </div>
                 <p className="text-[10px] text-black/50 leading-relaxed">
-                  Configura la clave del proveedor en `.env.local` (`GEMINI_API_KEY` o `GROQ_API_KEY`).
+                  {import.meta.env.VITE_GEMINI_API_KEY ? 'Gemini configurado correctamente' : 'Configura VITE_GEMINI_API_KEY en .env'}
                 </p>
               </div>
             </div>
